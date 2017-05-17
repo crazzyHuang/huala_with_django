@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}?v={{ version }}">
+    <link rel="stylesheet" href="{% static 'css/huala.css' %}?v={{ version }}">
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}?v={{ version }}">
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/css/swiper.min.css">#}
+    {#    <script type="text/javascript" src="{% static 'scripts/jquery-1.11.0.min.js' %}"></script>#}
+{% endblock %}
+
+{% block header %}
+ {% include 'widgets/main_header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'widgets/main_content.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'widgets/main_footer.html' %}
+{% endblock %}
+
+{% block script %}
+    {% load staticfiles %}
+{#    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>#}
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/swiper.jquery.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/widgets/category.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/widgets/centerArea.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/widgets/rightArea.js' %}?v={{ version }}"></script>
+{% endblock %}
+
