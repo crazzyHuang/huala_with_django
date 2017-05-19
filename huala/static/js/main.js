@@ -14,44 +14,31 @@ $(function () {
     rightArea.initStyle();
     rightArea.initEvent();
 
-   var isloading = false;
-   var sum = 0;
+    var isloading = false;
+    var sum = 0;
+    var $loading = $(".loading-bar");
+    var components = ['ms', 'cl', 'eb', 'gl'];
     // 监听页面滚动到底部动态加载更多内容
     $(window).scroll(function () {
-        // //下面这句主要是获取网页的总高度，主要是考虑兼容性所以把Ie支持的documentElement也写了，这个方法至少支持IE8
-        // var htmlHeight = document.body.scrollHeight || document.documentElement.scrollHeight;
-        // //clientHeight是网页在浏览器中的可视高度，
-        // var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
-        // //scrollTop是浏览器滚动条的top位置，
-        // var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-        // //通过判断滚动条的top位置与可视网页之和与整个网页的高度是否相等来决定是否加载内容；
-        //  console.info("scrollTop == " + scrollTop);
-        //  console.info("clientHeight == " + clientHeight);
-        //  console.info("htmlHeight == " + htmlHeight);
-        // if (scrollTop + clientHeight == htmlHeight) {
-        //     console.info("到底部了");
-        // }
-
+        if (isloading || sum > 1) {
+            return; // 如果是正在加载 就不要在搞事情了
+        }
         if ($(document).scrollTop() + $(window).height() + 200 >= $(document).height()) {
-            if(isloading || sum>2){
-               return; // 如果是正在加载 就不要在搞事情了
-            }
-            var $loading = $(".loading-bar");
             $loading.show();
             $loading.appendTo($('.body-auto'));
             isloading = true;
             $.ajax({
-                url: '/subbody/?key=ms',
+                url: '/subbody/?key='+components[sum],
+                // url: '/subbody/?key=cl',
                 dataType: 'html',
                 success: function (res) {
-                     sum ++;
-                     isloading = false;
+
                     setTimeout(function () { // 做演示用
-                         $(res).appendTo($('.body-auto'));
-                    $loading.hide();
-
-                    },800);
-
+                        $(res).appendTo($('.body-auto'));
+                        $loading.hide();
+                        isloading = false;
+                        sum++;
+                    }, 800);
                 }
             });
         }
